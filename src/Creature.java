@@ -1,7 +1,7 @@
 
-public interface Creature {
+public abstract class Creature {
 	
 	//逃げるメソッド
-	void run();
+	public abstract void run();
 	
 }

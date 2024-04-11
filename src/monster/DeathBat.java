@@ -1,20 +1,19 @@
 package monster;
 
-import character.Hero;
+import character.Character;
 
 public class DeathBat extends FlyingMonster {
 	
 	//	コンストラクタ
 	public DeathBat(String name) {
-		this.name = name;
-		this.hp = 10;
+		super(name, Constants.monsterParameters.DEATHBAT_HP, "monster");
 	}
 	
 //	攻撃するメソッド
-	public void attack(Hero h) {
-		System.out.println(h.name + "を突っついた！");
-		System.out.println(h.name + "に3ポイントのダメージ");
-		h.hp -= 3;
-	};
+	public void attack(Character c) {
+		System.out.println(c.getName() + "を突っついた！");
+		System.out.println(c.getName() + "に3ポイントのダメージ");
+		c.setHp(c.getHp() - 3);
+	}
 
 }

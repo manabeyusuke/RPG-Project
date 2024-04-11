@@ -6,19 +6,18 @@ import monster.Monster;
 public class Dancer extends Character{
 	
 	public Dancer(String name) {
-		super(name, characterParameters.DANCER_HP);
+		super(name, characterParameters.DANCER_HP, "dancer");
 	}
 	
 	public void Dance() {
-		System.out.println(this.name + "は情熱的に踊った！");
+		System.out.println(this.getName() + "は情熱的に踊った！");
 	}
 
 	@Override
 	public void attack(Monster m) {
-		// TODO 自動生成されたメソッド・スタブ
-		System.out.println(this.name + "の攻撃！");
+		System.out.println(this.getName() + "の攻撃！");
 		System.out.println("敵に3ポイントのダメージ");
-		m.hp -= 3;
+		m.setHp(m.getHp() - 3);
 	}
 
 }

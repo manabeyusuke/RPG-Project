@@ -1,20 +1,19 @@
 package monster;
 
-import character.Hero;
+import character.Character;
 
 public class Goblin extends WalkingMonster {
 	
 	//	コンストラクタ
 	public Goblin(String name) {
-		this.name = name;
-		this.hp = 5;
+		super(name, Constants.monsterParameters.GOBLIN_HP, "monster");
 	}
 	
 //	攻撃するメソッド
-	public void attack(Hero h) {
-		System.out.println(this.name + "ナイフで切り付けた！");
-		System.out.println(h.name + "に2ポイントダメージ");
-		h.hp -= 2;
+	public void attack(Character c) {
+		System.out.println(c.getName() + "をナイフで切り付けた！");
+		System.out.println(c.getName() + "に2ポイントのダメージ");
+		c.setHp(c.getHp() - 2);
 	};
 
 }

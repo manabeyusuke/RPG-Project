@@ -1,20 +1,19 @@
 package monster;
 
-import character.Hero;
+import character.Character;
 
 public class Werewolf extends WalkingMonster {
 	
 //	コンストラクタ
 	public Werewolf(String name) {
-		this.name = name;
-		this.hp = 5;
+		super(name, Constants.monsterParameters.MATANGO_HP, "monster");
 	}
 	
 //	攻撃するメソッド
-	public void attack(Hero h) {
-		System.out.println(this.name + "は噛み付いた！");
-		System.out.println(h.name + "に3ポイントダメージ");
-		h.hp -= 2;
+	public void attack(Character c) {
+		System.out.println(this.getName() + "は噛み付いた！");
+		System.out.println(c.getName() + "に3ポイントダメージ");
+		c.setHp(c.getHp() - 3);
 	};
 
 }
