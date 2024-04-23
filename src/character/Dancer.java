@@ -16,7 +16,7 @@ public class Dancer extends Character{
 	@Override
 	public void attack(Monster m) {
 		System.out.println(this.getName() + "の攻撃！");
-		System.out.println("敵に3ポイントのダメージ");
+		System.out.println(m.getName() + "に3ポイントのダメージ");
 		m.setHp(m.getHp() - 3);
 	}
 

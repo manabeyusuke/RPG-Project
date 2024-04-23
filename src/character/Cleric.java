@@ -18,7 +18,7 @@ public class Cleric extends Character{
 //	戦う
 	public void attack(Monster m) {
 		System.out.println(this.getName() + "は杖で叩いた！");
-		System.out.println("1ポイントのダメージ");
+		System.out.println(m.getName() + "に1ポイントのダメージ");
 		m.setHp(m.getHp() - 1);
 	}
 	
