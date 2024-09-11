@@ -14,9 +14,11 @@ import monster.Werewolf;
 
 public class Quest {
 	public int startQuest(ArrayList<Character> partyList, Scanner scan) {
-		System.out.println("*************************************");
-		System.out.println("*------------Start Quest------------*");
-		System.out.println("*************************************");
+		System.out.println("*――――――――――――――――――――――――――*");
+		System.out.println("|                                                    |");
+		System.out.println("|                     START QUEST                    |");
+		System.out.println("|                                                    |");
+		System.out.println("*――――――――――――――――――――――――――*");
 		System.out.println("");
 			
 		//バトル開始
@@ -52,7 +54,7 @@ public class Quest {
 				System.out.println("---------------------ステージ" + stage + "----------------------");
 				//モンスターを生成
 				ArrayList<Monster> monsterList = createMonster();
-				System.out.println("<<<モンスターが現れた！>>>");
+				System.out.println("【モンスターが現れた！】");
 				for (Monster ml : monsterList) {
 					System.out.println(ml.getName() + " | HP:" + ml.getHp());
 				}
@@ -68,7 +70,7 @@ public class Quest {
 				while(!isEndBattle) {
 					// バトル回数をカウント
 					count++;
-					System.out.println("バトル" + count + "回目");
+					System.out.println("⚔バトル" + count + "回目⚔");
 					
 					//行動するキャラクターをランダムに決める
 					Character c = null;
@@ -112,6 +114,7 @@ public class Quest {
 						isEndBattle = true;
 						System.out.println("敵を全滅させた！");
 						System.out.println("");
+						// TODO:アイテムドロップを作る
 					}
 				}
 				// 全ステージが終わったらクリア判定を実施

@@ -11,7 +11,12 @@ import character.Thief;
 public class Main { 
 
 	public static void main(String[] args) {
-		System.out.println("◆◇◆◇◆◇◆◇◆◇Java Questへようこそ◆◇◆◇◆◇◆◇◆◇");
+		System.out.println("*――――――――――――――――――――――――――*");
+		System.out.println("|                                                    |");
+		System.out.println("|                ◇◆◇JAVA　QUEST◇◆◇             |");
+		System.out.println("|                                                    |");
+		System.out.println("*――――――――――――――――――――――――――*");
+		System.out.println("");
 		Scanner scan = new Scanner(System.in);
 		
 		// 1.キャラクターメイキング
@@ -28,7 +33,11 @@ public class Main {
 			System.out.println(Constants.Massage.GAMEOVER_MESSAGE);
 		}
 		System.out.println("");
-		System.out.println("◆◇◆◇◆◇◆◇◆◇Java Quest 完◆◇◆◇◆◇◆◇◆◇");
+		System.out.println("*――――――――――――――――――――――――――*");
+		System.out.println("|                                                    |");
+		System.out.println("|                ◇◆◇JAVA　QUEST 完◇◆◇             |");
+		System.out.println("|                                                    |");
+		System.out.println("*――――――――――――――――――――――――――*");
 	}
 	
 	public static ArrayList<Character>  characterMaking(Scanner scan) {
@@ -65,6 +74,7 @@ public class Main {
 				break;
 			}
 		}
+		// TODO:名前を決められるようにする
 		System.out.println("パーティーを作成しました。");
 		for(Character pl : partyList) {
 			System.out.println(pl.getName() + " | HP:" + pl.getHp());
