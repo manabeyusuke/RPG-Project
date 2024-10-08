@@ -5,14 +5,13 @@ import monster.Monster;
 
 public class Cleric extends Character{
 	int mp = characterParameters.CLERIC_MP;
-	int maxHp = characterParameters.CLERIC_MAXHP;
-	int maxMp = characterParameters.CLERIC_MAXMP;
+	int maxHp = characterParameters.CLERIC_MAX_HP;
+	int maxMp = characterParameters.CLERIC_MAX_MP;
 	
 //	コンストラクタ
 	public Cleric(String name) {
-		super(name, characterParameters.CLERIC_HP, "cleric");
-		this.mp = characterParameters.CLERIC_MP;
-//		System.out.println(this.name + "(ジョブ：魔法使い)が誕生した。");
+		super(name, characterParameters.CLERIC_MAX_HP, "cleric");
+		this.mp = characterParameters.CLERIC_MAX_MP;
 	}
 	
 //	戦う

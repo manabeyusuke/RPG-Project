@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import Item.Item;
+import Item.Potion;
 import character.Character;
 import common.Common;
 import monster.DeathBat;
@@ -37,6 +39,10 @@ public class Quest {
 		boolean isExitStage = false;
 		String existMapKey = "";
 		int monsterNo = 1;
+		Item itm = new Item();
+		
+		//アイテムボックス用マップを作成
+		Map<String, Item> itemBox = new HashMap<>();
 		
 		//キャラクター用マップを作成
 		Map<String, Character> partyListMap = new HashMap<>();
@@ -52,7 +58,7 @@ public class Quest {
 			for (int stage = 1; stage < 4; stage++) {
 				isEndBattle = false;
 				System.out.println("---------------------ステージ" + stage + "----------------------");
-				//モンスターを生成
+				// モンスターを生成
 				ArrayList<Monster> monsterList = createMonster();
 				System.out.println("【モンスターが現れた！】");
 				for (Monster ml : monsterList) {
@@ -70,13 +76,19 @@ public class Quest {
 				while(!isEndBattle) {
 					// バトル回数をカウント
 					count++;
-					System.out.println("⚔バトル" + count + "回目⚔");
+					System.out.println("【 バ ト ル " + count + " 回 目 】");
 					
 					//行動するキャラクターをランダムに決める
 					Character c = null;
 					Monster m = null;
 					
-					// 行動するキャラクターを決めるため、存在するキーの中でランダムに1つ受け取る
+					//デバッグ
+					System.out.println("ポーションを手に入れた");
+					Item p = new Potion("ポーション", 1);
+					itemBox.put(p.getName(), p);
+					p.openItemBox(itemBox);
+					
+					// 誰に行動させるかを決めるため、存在するキーの中でランダムに1つ受け取る
 					List<String> partyMapKeyList = new ArrayList<>(partyListMap.keySet());
 					List<String> monsterMapKeyList = new ArrayList<>(monsterListMap.keySet());
 					List<String> allMapKeyList = new ArrayList<>();
@@ -90,9 +102,9 @@ public class Quest {
 					if (partyListMap.containsKey(existMapKey)) {
 						// キャラクターMapのキーであればキャラクターの行動分岐に移る 
 						c = partyListMap.get(existMapKey);
-						monsterListMap.putAll(characterAction(scan, c, monsterListMap, monsterMapKeyList));
+						monsterListMap.putAll(characterAction(scan, c, monsterListMap, monsterMapKeyList, itm, itemBox));
 						System.out.println("");
-						System.out.println("======バトル終了=======");
+						System.out.println("======バ ト ル 終 了=======");
 						System.out.println("");
 						showCurrentHp(partyListMap, monsterListMap);
 					} else {
@@ -101,7 +113,7 @@ public class Quest {
 		
 						partyListMap.putAll(monsterAction(partyListMap, m, partyMapKeyList));
 						System.out.println("");
-						System.out.println("======バトル終了=======");
+						System.out.println("======バ ト ル 終 了=======");
 						System.out.println("");
 						showCurrentHp(partyListMap, monsterListMap);
 					}
@@ -110,13 +122,19 @@ public class Quest {
 						isEndBattle = true;
 						isExitStage = true;
 						result = Constants.Massage.RTN_GAMEOVER;
+						return result;
 					} else if (monsterListMap.isEmpty()) {
 						isEndBattle = true;
 						System.out.println("敵を全滅させた！");
 						System.out.println("");
 						// TODO:アイテムドロップを作る
+//						System.out.println("ポーションを手に入れた");
+//						Item p = new Potion("ポーション");
+//						itemBox.put(p.getName(), p);
+						
 					}
 				}
+				
 				// 全ステージが終わったらクリア判定を実施
 				if (stage == 3) {
 					if (partyListMap.isEmpty()) {
@@ -173,11 +191,11 @@ public class Quest {
 	 * @param num モンスターMapのインデックスはキャラクターの数分ずらしている
 	 * @return モンスターマップ　最新のモンスターの数を返す
 	 */
-	public static Map<String, Monster> characterAction(Scanner scan, Character c, Map<String, Monster> monsterListMap, List<String> keyList) {		
+	public static Map<String, Monster> characterAction(Scanner scan, Character c, Map<String, Monster> monsterListMap, List<String> keyList, Item itm, Map<String, Item> ib) {		
 		String targetMonsterKey = "";
 		
-		System.out.println(c.getName() + "のターン");
-	    System.out.println("【1：戦う／2：道具／3：逃げる】");
+		System.out.println(c.getFreeName() + "のターン");
+	    System.out.println("【1：戦う／2：アイテム／3：逃げる】");
         String actionNo = scan.nextLine();
 
 		switch(actionNo) {
@@ -191,7 +209,8 @@ public class Quest {
 			break;
 		case "2":
 			//TODO:アイテムを使えるようにする
-			c.run();
+			itm.openItemBox(ib);
+//			c.run();
 			break;
 		case "3":
 			c.run();
@@ -202,8 +221,8 @@ public class Quest {
 	
 	/**
 	 * モンスター用の行動分岐メソッド
-	 * @param partyListMap
-	 * @param m
+	 * @param partyListMap パーティーメンバー
+	 * @param m　行動するモンスター
 	 */
 	public static Map<String, Character> monsterAction(Map<String, Character> partyListMap, Monster m, List<String> keyList) {
 		String targetCharacterKey = "";
@@ -235,14 +254,14 @@ public class Quest {
 	 * @param monsterListMap
 	 */
 	public static void showCurrentHp(Map<String, Character> partyListMap, Map<String, Monster> monsterListMap) {
-		System.out.println("----キャラクターの現在のHP----");
+		System.out.println("------------------キャラクターの現在のHP------------------");
 		for (Map.Entry<String, Character> entry : partyListMap.entrySet()) {
 			if (entry.getKey() != null) {
-				System.out.println(entry.getValue().getName() + " | HP:" + entry.getValue().getHp());
+				System.out.println(entry.getValue().getFreeName() + " | HP:" + entry.getValue().getHp());
 			}
 		}
 		System.out.println("==========================");
-		System.out.println("-----モンスターの現在のHP-----");
+		System.out.println("------------------モンスターの現在のHP--------------------");
 		for (Map.Entry<String, Monster> entry : monsterListMap.entrySet()) {
 			if (entry.getKey() != null) {
 				System.out.println(entry.getValue().getName() + " | HP:" + entry.getValue().getHp());
@@ -251,7 +270,12 @@ public class Quest {
 		System.out.println("");
 	}
 	
-	// Map内に存在するキーをランダムに返すメソッド
+	/** Map内に存在するキーをランダムに返すメソッド
+	 * 
+	 * @param list 現在生きているキャラクターとモンスターのkeyのリスト
+	 * @return key キャラクターかモンスターのkey
+	 */
+	
 	public static String getRandumExistMapKey (List<String> list) {
 		String key = "";
 		int size = list.size();

@@ -6,11 +6,18 @@ public abstract class Character {
 	private String name;
 	private int hp;
 	private String keyName;
+	private String freeName;
+	
+	public Character() {
+		//空のコンストラクタ
+	}
 	
 	 public Character(String name,int hp, String keyName) {
 		this.name = name;
 		this.hp = hp;
 		this.keyName = keyName;
+		
+		
 	}
 	 
 	 public String getName() {
@@ -35,6 +42,14 @@ public abstract class Character {
 	 
 	 public void setKeyname(String keyName) {
 		 this.keyName = keyName;
+	 }
+	 
+	 public String getFreeName() {
+		 return this.freeName;
+	 }
+	 
+	 public void setFreeName(String freeName) {
+		 this.freeName = freeName;
 	 }
 	
 	//逃げる

@@ -6,7 +6,7 @@ public class DeathBat extends FlyingMonster {
 	
 	//	コンストラクタ
 	public DeathBat(String name) {
-		super(name, Constants.monsterParameters.DEATHBAT_HP, "monster");
+		super(name, Constants.monsterParameters.DEATHBAT_HP, "deathBat");
 	}
 	
 //	攻撃するメソッド

@@ -6,7 +6,7 @@ public class PoisonMatango extends WalkingMonster{
 	int poisonAttackCount = 5;
 	
 	public PoisonMatango (String name) {
-		super(name, Constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, Constants.monsterParameters.MATANGO_HP, "poisonMatango");
 	}
 	
 	public void attack(Character c) {
