@@ -53,7 +53,7 @@ public abstract class Character {
 	 }
 	
 	//逃げる
-	public void run() {
+	public void escape() {
 		System.out.println(this.name + "は逃げ出した");
 	}
 	
