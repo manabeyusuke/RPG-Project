@@ -3,29 +3,55 @@ package character;
 import monster.Monster;
 
 public abstract class Character {
-	private String name;
-	private int hp;
-	private String keyName;
+	private int index;
+	private String job;
+	private String key;
 	private String freeName;
+	private int maxHp;
+	private int hp;
 	
 	public Character() {
 		//空のコンストラクタ
 	}
 	
-	 public Character(String name,int hp, String keyName) {
-		this.name = name;
+	 public Character(int index, String job, String key, int maxHp, int hp) {
+		this.index = index;
+		this.job = job;
+		this.key = key;
+		this.maxHp = maxHp;
 		this.hp = hp;
-		this.keyName = keyName;
-		
-		
 	}
 	 
-	 public String getName() {
-		 return this.name;
+	 public int getIndex() {
+		 return this.index;
 	 }
 	 
-	 public void setName(String name) {
-		 this.name = name;
+	 public void setIndex(int index) {
+		 this.index = index;
+	 }
+	 
+	 public String getJob() {
+		 return this.job;
+	 }
+	 
+	 public void setJob(String job) {
+		 this.job = job;
+	 }
+	 
+	 public String getKey() {
+		 return this.key;
+	 }
+	 
+	 public void setKey(String key) {
+		 this.key = key;
+	 }
+	 
+	 public int getMaxhp() {
+		 return this.maxHp;
+	 }
+	 
+	 public void setMaxhp(int maxHp) {
+		 this.maxHp = maxHp;
 	 }
 	 
 	 public int getHp() {
@@ -36,25 +62,17 @@ public abstract class Character {
 		 this.hp = hp;
 	 }
 	 
-	 public String getKeyname() {
-		 return this.keyName;
-	 }
-	 
-	 public void setKeyname(String keyName) {
-		 this.keyName = keyName;
-	 }
-	 
-	 public String getFreeName() {
+	 public String getFreename() {
 		 return this.freeName;
 	 }
 	 
-	 public void setFreeName(String freeName) {
+	 public void setFreename(String freeName) {
 		 this.freeName = freeName;
 	 }
 	
 	//逃げる
 	public void escape() {
-		System.out.println(this.name + "は逃げ出した");
+		System.out.println(this.freeName + "は逃げ出した");
 	}
 	
 	//戦う

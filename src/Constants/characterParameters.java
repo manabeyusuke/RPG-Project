@@ -4,7 +4,7 @@ public class characterParameters {
 	
 //	ヒーローのパラメーター
 	public static final int HERO_MAX_HP = 100;
-	public static final int HERO_HP = 1;
+	public static final int HERO_HP = 100;
 	
 //	スーパーヒーローのパラメーター
 	public static final int SUPER_HERO_MAX_HP = 100;

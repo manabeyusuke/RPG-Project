@@ -11,8 +11,8 @@ public class DeathBat extends FlyingMonster {
 	
 //	攻撃するメソッド
 	public void attack(Character c) {
-		System.out.println(c.getFreeName() + "を突っついた！");
-		System.out.println(c.getFreeName() + "に3ポイントのダメージ");
+		System.out.println(c.getFreename() + "を突っついた！");
+		System.out.println(c.getFreename() + "に3ポイントのダメージ");
 		c.setHp(c.getHp() - 3);
 	}
 

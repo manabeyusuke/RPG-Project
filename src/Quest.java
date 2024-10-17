@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 import Item.Item;
 import character.Character;
 import logic.Baselogic;
+import logic.Itemlogic;
 import monster.Monster;
 
 public class Quest {
@@ -32,19 +34,17 @@ public class Quest {
 	 */
 	public static int startBattle(ArrayList<Character> partyList, Scanner scan) {
 		int stage = 1;
-		boolean isEndBattle = false;
-//		boolean isExitStage = false;
-		String existMapKey = "";
 		int monsterNo = 1;
-		Item itm = new Item();
+		boolean isEndBattle = false;
+		String existMapKey = "";
 		
 		// アイテムボックス用マップを作成
-		Map<String, Item> itemBox = new HashMap<>();
+		Map<String, Item> itemBoxMap = new LinkedHashMap<>();
 		
 		// キャラクター用マップを作成
 		Map<String, Character> partyListMap = new HashMap<>();
 		for (int i = 0; i < partyList.size(); i++) {
-			partyListMap.put(partyList.get(i).getKeyname(), partyList.get(i));
+			partyListMap.put(partyList.get(i).getKey(), partyList.get(i));
 		}
 		
 		// モンスター用マップを作成
@@ -75,23 +75,24 @@ public class Quest {
 				count++;
 				System.out.println("【 バ ト ル " + count + " 回 目 】");
 				
-				//行動するキャラクターをランダムに決める
+				// 行動するキャラクターをランダムに決める
 				Character c = null;
 				Monster m = null;
 				
 				// 誰に行動させるかを決めるため、存在するキーの中でランダムに1つ受け取る
 				List<String> allMapKeyList = new ArrayList<>(partyListMap.keySet());
 				allMapKeyList.addAll(monsterListMap.keySet());
-				existMapKey = Baselogic.getRandumExistMapKey(allMapKeyList);
+//				existMapKey = Baselogic.getRandumExistMapKey(allMapKeyList);
+				existMapKey = "hero";
 				
 				// 誰に行動させるかを決める処理
 				if (partyListMap.containsKey(existMapKey)) {
 					// キャラクターMapのキーであればキャラクターの行動分岐に移る 
 					c = partyListMap.get(existMapKey);
 					// バトルの結果、死んだモンスターがいるかもしれないため、最新のマップ情報に洗い替え
-					monsterListMap.putAll(characterAction(scan, c, monsterListMap, itm, itemBox));
+					monsterListMap.putAll(characterAction(scan, c, partyListMap, monsterListMap, itemBoxMap));
 					System.out.println("");
-					System.out.println("======バ ト ル 終 了=======");
+					System.out.println("===========バ ト ル 終 了===========");
 					System.out.println("");
 					Baselogic.showCurrentHp(partyListMap, monsterListMap);
 				} else {
@@ -100,7 +101,7 @@ public class Quest {
 					// バトルの結果、死んだキャラクターがいるかもしれないため、最新のマップ情報に洗い替え
 					partyListMap.putAll(monsterAction(partyListMap, m));
 					System.out.println("");
-					System.out.println("======バ ト ル 終 了=======");
+					System.out.println("===========バ ト ル 終 了===========");
 					System.out.println("");
 					Baselogic.showCurrentHp(partyListMap, monsterListMap);
 				}
@@ -112,7 +113,7 @@ public class Quest {
 					System.out.println("敵を全滅させた！");
 					System.out.println("");
 					// アイテムドロップ
-					itemBox = new HashMap<>(Baselogic.itemDropAndUpdateItembox(itemBox));
+					Baselogic.itemDropAndUpdateItembox(itemBoxMap);
 				}
 			}
 		stage++;
@@ -129,36 +130,36 @@ public class Quest {
 	 * @param scan
 	 * @param c　キャラクター情報
 	 * @param monsterListMap　モンスターのリスト
-	 * @param keyList 
+	 * @param itm 選択したアイテム
+	 * @param ib アイテムボックス
 	 * @return モンスターマップ　最新のモンスターの数を返す
 	 */
-	public static Map<String, Monster> characterAction(Scanner scan, Character c, Map<String, Monster> monsterListMap, Item itm, Map<String, Item> ib) {		
+	public static Map<String, Monster> characterAction(Scanner scan, Character c, Map<String, Character> partyListMap, Map<String, Monster> monsterListMap, Map<String, Item> ib) {		
 		String targetMonsterKey = "";
 		List<String> monsterMapKeyList = new ArrayList<>(monsterListMap.keySet());
 		
-		System.out.println(c.getFreeName() + "のターン");
+		System.out.println(c.getFreename() + "のターン");
 	    System.out.println("【1：戦う／2：アイテム／3：逃げる】");
         String actionNo = scan.nextLine();
 
 		switch(actionNo) {
-		case "1":
-			// TODO:キャラクター固有の技を選択できるようにする
-			targetMonsterKey = Baselogic.getRandumExistMapKey(monsterMapKeyList);
-			Monster targetMonster = monsterListMap.get(targetMonsterKey);
-			c.attack(targetMonster);
-			if (targetMonster.getHp() <= 0) {
-				monsterListMap.remove(targetMonsterKey);
+			case "1":
+				// TODO:キャラクター固有の技を選択できるようにする
+				targetMonsterKey = Baselogic.getRandumExistMapKey(monsterMapKeyList);
+				Monster targetMonster = monsterListMap.get(targetMonsterKey);
+				c.attack(targetMonster);
+				if (targetMonster.getHp() <= 0) {
+					monsterListMap.remove(targetMonsterKey);
+				}
+				break;
+			case "2":
+				Itemlogic.itemEffect(scan, ib, partyListMap);
+				Baselogic.showCurrentHp(partyListMap, monsterListMap);
+				break;
+			case "3":
+				c.escape();
+				break;
 			}
-			break;
-		case "2":
-			// TODO:アイテムを使えるようにする
-			Baselogic.openItemBox(ib);
-//			c.run();
-			break;
-		case "3":
-			c.escape();
-			break;
-		}
 		return monsterListMap;
 	}
 	

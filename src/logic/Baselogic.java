@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import Item.FullPotion;
+import Item.HighPotion;
 import Item.Item;
+import Item.Potion;
 import character.Character;
 import character.Cleric;
 import character.Dancer;
@@ -23,6 +26,7 @@ public class Baselogic {
 	
 	public static ArrayList<Character> characterMaking(Scanner scan) {
 		ArrayList<Character> partyList = new ArrayList<Character>();
+		int num = 1;
 		
 		System.out.println("キャラクターを選択してください(複数選択可。カンマ区切りで数字を入力。)");
 		System.out.println("【1.勇者／2.騎士／3.魔法使い／4.盗賊／5.ダンサー】");
@@ -33,36 +37,37 @@ public class Baselogic {
 		for (String cl : characterList) {
 			switch(cl) {
 			case "1":
-				Character h = new Hero("勇者");
+				Character h = new Hero(num, "勇者", "hero");
 				decideCharacterFreeName(h, scan);
 				partyList.add(h);
 				break;
 			case "2":
-				Character k  = new Knight("騎士");
+				Character k  = new Knight(num, "騎士", "knight");
 				decideCharacterFreeName(k, scan);
 				partyList.add(k);
 				break;
 			case "3":
-				Character c  = new Cleric("魔法使い");
+				Character c  = new Cleric(num, "魔法使い", "cleric");
 				decideCharacterFreeName(c, scan);
 				partyList.add(c);
 				break;
 			case "4":
-				Character t = new Thief("盗賊");
+				Character t = new Thief(num, "盗賊", "thief");
 				decideCharacterFreeName(t, scan);
 				partyList.add(t);
 				break;
 			case "5":
-				Character d = new Dancer("ダンサー");
+				Character d = new Dancer(num, "ダンサー", "dancer");
 				decideCharacterFreeName(d, scan);
 				partyList.add(d);
 				break;
 			}
+			num++;
 		}
 		
 		System.out.println("パーティーを作成しました。");
 		for(Character pl : partyList) {
-			System.out.println(pl.getFreeName() + " | HP:" + pl.getHp());
+			System.out.println(pl.getFreename() + " | HP:" + pl.getHp());
 		}
 		System.out.println("");
 		
@@ -71,8 +76,8 @@ public class Baselogic {
 	
 	// キャラクター名を決めるメソッド
 	public static void decideCharacterFreeName(Character c, Scanner scan) {
-		System.out.println(c.getName() + "の名前を決めてください。");
-		c.setFreeName(scan.nextLine());
+		System.out.println(c.getJob() + "の名前を決めてください。");
+		c.setFreename(scan.nextLine());
 	}
 	
 	/**
@@ -84,7 +89,7 @@ public class Baselogic {
 	public static ArrayList<Monster> createMonster() {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		
-//		モンスターをランダムに3体生成する
+		// モンスターをランダムに3体生成する
 		for(int i = 1; i < 4; i++) {
 			int num = Common.getRandum(4);
 			
@@ -120,10 +125,10 @@ public class Baselogic {
 		System.out.println("------------------キャラクターの現在のHP------------------");
 		for (Map.Entry<String, Character> entry : partyListMap.entrySet()) {
 			if (entry.getKey() != null) {
-				System.out.println(entry.getValue().getFreeName() + " | HP:" + entry.getValue().getHp());
+				System.out.println(entry.getValue().getFreename() + " | HP:" + entry.getValue().getHp());
 			}
 		}
-		System.out.println("==========================");
+		System.out.println("=======================================================");
 		System.out.println("------------------モンスターの現在のHP--------------------");
 		for (Map.Entry<String, Monster> entry : monsterListMap.entrySet()) {
 			if (entry.getKey() != null) {
@@ -145,13 +150,13 @@ public class Baselogic {
 		return key;
 	}
 	
-	/** ランダムに3つのアイテムを返して、最新のアイテムボックスを返すメソッド
+	/** 
+	 * ランダムに3つのアイテムを落として、最新のアイテムボックスを返すメソッド
+	 * @param index アイテムボックス用インデックス
+	 * @param itb アイテムボックス
 	 * @return Map アイテムリスト
 	 */
-	public static Map<String, Item> itemDropAndUpdateItembox(Map<String, Item>itb) {
-		// 返却用Map
-//		Map<String, Item> newItemBox = new HashMap<>(itb);
-		
+	public static void itemDropAndUpdateItembox(Map<String,Item>itb) {
 		// 3つ落とす
 		for (int i = 0; i < 3; i++) {
 			int num = Common.getRandum(3);
@@ -159,55 +164,43 @@ public class Baselogic {
 			switch(num) {
 				// ポーションをドロップ
 				case 0:
-					Item p = new Item("ポーション",1);
+					Item p = new Potion("ポーション", 1);
 					System.out.println("ポーションを手に入れた。");
-					checkItemBox(itb,p);
+					addItemBox(itb,p);
 					break;
 				// ハイポーションをドロップ
 				case 1:
-					Item highP = new Item("ハイポーション",1);
+					Item highP = new HighPotion("ハイポーション", 1);
 					System.out.println("ハイポーションを手に入れた。");
-					checkItemBox(itb,highP);
+					addItemBox(itb,highP);
 					break;
 				// フルポーションをドロップ
 				case 2:
-					Item fullP = new Item("フルポーション",1);
+					Item fullP = new FullPotion("フルポーション", 1);
 					System.out.println("フルポーションを手に入れた。");
-					itb.put(fullP.getName(), fullP);
+					addItemBox(itb,fullP);
 					break;
 			}
 		}
-		return itb;
+//		return itb;
 	}
 	
-	/** ドロップしたアイテムを持っているかチェックするメソッド
+	/** ドロップしたアイテムをアイテムボックスに追加するメソッド
 	 * @param itb アイテムボックスMap
 	 * @param i ドロップしたアイテム
 	 * 
 	 * @return itb 最新のアイテムボックス
 	 */
-	public static Map<String,Item> checkItemBox(Map<String,Item>itb, Item i) {
-		if (itb.containsKey(i.getName())) {
+	public static void addItemBox(Map<String,Item>itb, Item i) {		
+		if (itb.containsKey(i.getName())){
 			// 既に持っているアイテムの場合は個数を1つ増やす
 			int currentCount = itb.get(i.getName()).getCount();
-			itb.get(i.getName()).setCount(currentCount + 1);;
+			itb.get(i.getName()).setCount(currentCount + 1);
 		} else {
 			// 持っていないアイテムの場合は新規に追加する
+			int idx = itb.size();
+			i.setIndex(idx + 1);
 			itb.put(i.getName(), i);
 		}
-		return itb;
 	}
-	
-	/** アイテムボックスの中身を表示させるメソッド
-	 * @param ib アイテムボックスMap
-	 */
-	public static void openItemBox(Map<String, Item> ib) {
-		for (Map.Entry<String, Item> entry : ib.entrySet()) {
-			System.out.print(entry.getValue().getName() + " : " + entry.getValue().getCount() + " | ");
-			
-			// アイテム3つ毎に改行する
-			System.out.println(); 
-		}
-	}
-	
 }

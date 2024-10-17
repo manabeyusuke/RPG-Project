@@ -9,10 +9,13 @@ public class FullPotion extends Item {
 		super(name, count);
 	}
 	
-	// 回復メソッド
-	// キャラクター全回復する
-	public void Heal(Character c) {
+	/** 回復メソッド
+	*【フルポーションの効果】
+	* 選択したキャラクターを回復させる
+	* 回復量：全回復
+	*/
+	public static void effect(Character c) {
 		//回復量
-		//c.setHp(c.);
+		c.setHp(c.getMaxhp());
 	}
 }

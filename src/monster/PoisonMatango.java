@@ -15,7 +15,7 @@ public class PoisonMatango extends WalkingMonster{
 			int poisonDamage = c.getHp() / 5;
 			c.setHp(c.getHp() - poisonDamage);
 			System.out.println(poisonDamage + "ポイントのダメージ");
-			System.out.println("現在の" + c.getFreeName() + "のHP：" + c.getHp());
+			System.out.println("現在の" + c.getFreename() + "のHP：" + c.getHp());
 			this.poisonAttackCount--;
 		}
 	}

@@ -1,8 +1,16 @@
 package Item;
 
 public class Item {
+	private int index;
 	private String name;
 	private int count;
+	
+//	/** 
+//	 *  抽象メソッド
+//	 *  アイテム効果メソッド
+//	 *  アイテム毎に実装する
+//	 */
+//	abstract void effect(Character c);
 	
 	public Item() {
 		// 空のコンストラクタ
@@ -15,6 +23,10 @@ public class Item {
 	}
 	
 	// setter
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -23,8 +35,11 @@ public class Item {
 		this.count = count;
 	}
 	
-	
 	// getter
+	public int getIndex() {
+		return this.index;
+	}
+	
 	public String getName() {
 		return this.name;
 	}
