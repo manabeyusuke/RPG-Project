@@ -1,16 +1,11 @@
 package Item;
 
-public class Item {
+import character.Character;
+
+public abstract class Item {
 	private int index;
 	private String name;
 	private int count;
-	
-//	/** 
-//	 *  抽象メソッド
-//	 *  アイテム効果メソッド
-//	 *  アイテム毎に実装する
-//	 */
-//	abstract void effect(Character c);
 	
 	public Item() {
 		// 空のコンストラクタ
@@ -47,4 +42,11 @@ public class Item {
 	public int getCount() {
 		return this.count;
 	}
+	
+	/** 
+	 *  抽象メソッド
+	 *  アイテム効果メソッド
+	 *  アイテム毎に実装する
+	 */
+	public abstract void effect(Character c);
 }

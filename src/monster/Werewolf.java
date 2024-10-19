@@ -1,12 +1,13 @@
 package monster;
 
 import character.Character;
+import constants.monsterParameters;
 
 public class Werewolf extends WalkingMonster {
 	
 //	コンストラクタ
 	public Werewolf(String name) {
-		super(name, constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, monsterParameters.MATANGO_HP, "monster");
 	}
 	
 //	攻撃するメソッド

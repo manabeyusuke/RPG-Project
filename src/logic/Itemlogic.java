@@ -83,7 +83,6 @@ public class Itemlogic {
 		int itemIndex = 1;
 		boolean isUseItem = false;
 		boolean isExistNum = false;
-		String selectItemName = "";
 		
 		// indexをキーにしてMapに詰め替える（キャラクターMap）
 		for (Map.Entry<String,Character> entry : partyListMap.entrySet()) {
@@ -117,10 +116,6 @@ public class Itemlogic {
 				isExistNum = false;
 				continue;
 			}
-			if (isUseItem && isExistNum) {
-				// 1個以上持っているアイテム且つ、アイテムボックス内に存在する番号ならばアイテム名を取得する
-				selectItemName = ibMapOfIndex.get(itemIndex).getName();
-			}
 		}
 		
 		System.out.println("【誰に使用しますか？】");
@@ -133,42 +128,8 @@ public class Itemlogic {
 		}
 		int charIndex = scan.nextInt();
 		
-		int valueOfHeal = 0;
-		switch(selectItemName) {
-			case "ポーション":
-				// キャラクターの最大HPの1/3を回復する
-				valueOfHeal = (int)Math.ceil(partyListMapOfIndex.get(charIndex).getMaxhp() / 3);
-				System.out.println(partyListMapOfIndex.get(charIndex).getFreename() + "にポーションを使った。");
-				partyListMapOfIndex.get(charIndex).setHp(partyListMapOfIndex.get(charIndex).getHp() + valueOfHeal);
-				// 所持数を1つ減らす
-				ibMapOfIndex.get(itemIndex).setCount(ibMapOfIndex.get(itemIndex).getCount() - 1);
-				checkLimitHp(partyListMapOfIndex.get(charIndex));
-				break;
-			case "ハイポーション":
-				// キャラクターの最大HPの7割を回復する
-				valueOfHeal = (int)Math.ceil(partyListMapOfIndex.get(charIndex).getMaxhp() * 0.7);
-				System.out.println(partyListMapOfIndex.get(charIndex).getFreename() + "にハイポーションを使った。");
-				partyListMapOfIndex.get(charIndex).setHp(partyListMapOfIndex.get(charIndex).getHp() + valueOfHeal);
-				// 所持数を1つ減らす
-				ibMapOfIndex.get(itemIndex).setCount(ibMapOfIndex.get(itemIndex).getCount() - 1);
-				checkLimitHp(partyListMapOfIndex.get(charIndex));
-				break;
-			case "フルポーション":
-				// キャラクターを全回復する
-				System.out.println(partyListMapOfIndex.get(charIndex).getFreename() + "にフルポーションを使った。");
-				partyListMapOfIndex.get(charIndex).setHp(partyListMapOfIndex.get(charIndex).getMaxhp());
-				// 所持数を1つ減らす
-				ibMapOfIndex.get(itemIndex).setCount(ibMapOfIndex.get(itemIndex).getCount() - 1);
-				checkLimitHp(partyListMapOfIndex.get(charIndex));
-				break;
-			case "解毒薬":
-				// キャラクターの毒状態を治す
-				System.out.println(partyListMapOfIndex.get(charIndex).getFreename() + "に解毒薬を使った。");
-				partyListMapOfIndex.get(charIndex).removeStatuslist("毒");
-				// 所持数を1つ減らす
-				ibMapOfIndex.get(itemIndex).setCount(ibMapOfIndex.get(itemIndex).getCount() - 1);
-				break;
-			}
+		// 選択したアイテムの効果メソッドを呼び出す
+		ibMapOfIndex.get(itemIndex).effect(partyListMapOfIndex.get(charIndex));
 	}
 	
 	/**

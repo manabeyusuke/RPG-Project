@@ -9,13 +9,16 @@ public class FullPotion extends Item {
 		super(name, count);
 	}
 	
-	/** 回復メソッド
+	/** アイテム効果メソッド
 	*【フルポーションの効果】
 	* 選択したキャラクターを回復させる
 	* 回復量：全回復
 	*/
-	public static void effect(Character c) {
-		//回復量
+	public void effect(Character c) {
+		System.out.println(c.getFreename() + "にフルポーションを使った");
+		
 		c.setHp(c.getMaxhp());
+		System.out.println(c.getFreename() + "は全回復した。");
+		this.setCount(getCount() - 1);
 	}
 }

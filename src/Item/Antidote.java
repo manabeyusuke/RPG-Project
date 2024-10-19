@@ -2,21 +2,22 @@ package Item;
 
 import character.Character;
 
+// 解毒薬クラス
 public class Antidote extends Item {
 	
 	// コンストラクタ
-		public Antidote(String name) {
-			super(name,1);
-		}
+	public Antidote(String name) {
+		super(name,1);
+	}
 		
-		/** 回復メソッド
-		*【フルポーションの効果】
-		* 選択したキャラクターを回復させる
-		* 回復量：全回復
-		*/
-		public static void effect(Character c) {
-			//回復量
-			c.setHp(c.getMaxhp());
-		}
-
+	/** アイテム効果メソッド
+	*【解毒薬の効果】
+	* 選択したキャラクターの毒状態を治癒する
+	*/
+	public void effect(Character c) {
+		System.out.println(c.getFreename() + "に解毒薬を使った。");
+		// statusリストから毒を削除
+		c.removeStatuslist("毒");
+		this.setCount(getCount() - 1);
+	}
 }

@@ -1,12 +1,13 @@
 package monster;
 
 import character.Character;
+import constants.monsterParameters;
 
 public class DeathBat extends FlyingMonster {
 	
 	//	コンストラクタ
 	public DeathBat(String name) {
-		super(name, constants.monsterParameters.DEATHBAT_HP, "monster");
+		super(name, monsterParameters.DEATHBAT_HP, "monster");
 	}
 	
 //	攻撃するメソッド

@@ -1,12 +1,13 @@
 package monster;
 
 import character.Character;
+import constants.monsterParameters;
 
 public class Goblin extends WalkingMonster {
 	
 	//	コンストラクタ
 	public Goblin(String name) {
-		super(name, constants.monsterParameters.GOBLIN_HP, "monster");
+		super(name, monsterParameters.GOBLIN_HP, "monster");
 	}
 	
 //	攻撃するメソッド

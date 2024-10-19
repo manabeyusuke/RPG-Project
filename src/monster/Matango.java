@@ -1,11 +1,12 @@
 package monster;
 
 import character.Character;
+import constants.monsterParameters;
 
 public class Matango extends WalkingMonster{
 	
 	public Matango(String name) {
-		super(name, constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, monsterParameters.MATANGO_HP, "monster");
 	}
 	
 	public void attack(Character c) {
