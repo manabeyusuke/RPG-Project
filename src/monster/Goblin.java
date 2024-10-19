@@ -6,7 +6,7 @@ public class Goblin extends WalkingMonster {
 	
 	//	コンストラクタ
 	public Goblin(String name) {
-		super(name, Constants.monsterParameters.GOBLIN_HP, "monster");
+		super(name, constants.monsterParameters.GOBLIN_HP, "monster");
 	}
 	
 //	攻撃するメソッド

@@ -1,4 +1,4 @@
-package Constants;
+package constants;
 
 public class monsterParameters {
 	
@@ -7,6 +7,7 @@ public class monsterParameters {
 	
 //	毒キノコのパラメーター
 	public static final int MATANGO_HP = 1;
+	public static final int ATTACK_POISON = 2;
 	
 //	ウルフのパラメーター
 	public static final int WEREWOLF_HP = 1;

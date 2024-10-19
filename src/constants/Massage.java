@@ -1,4 +1,4 @@
-package Constants;
+package constants;
 
 public class Massage {
 	public static final int RTN_CLEAR = 0;		//	クエストクリア

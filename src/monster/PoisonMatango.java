@@ -6,7 +6,7 @@ public class PoisonMatango extends WalkingMonster{
 	int poisonAttackCount = 5;
 	
 	public PoisonMatango (String name) {
-		super(name, Constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, constants.monsterParameters.MATANGO_HP, "PoisonMatango");
 	}
 	
 	public void attack(Character c) {
@@ -15,7 +15,10 @@ public class PoisonMatango extends WalkingMonster{
 			int poisonDamage = c.getHp() / 5;
 			c.setHp(c.getHp() - poisonDamage);
 			System.out.println(poisonDamage + "ポイントのダメージ");
-			System.out.println("現在の" + c.getFreename() + "のHP：" + c.getHp());
+			if (!c.getStatuslist("毒")) {
+				c.setStatuslist("毒");
+				System.out.println(c.getFreename() + "は【状態異常：毒】になった。");
+			}
 			this.poisonAttackCount--;
 		}
 	}

@@ -5,7 +5,7 @@ import character.Character;
 public class Matango extends WalkingMonster{
 	
 	public Matango(String name) {
-		super(name, Constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, constants.monsterParameters.MATANGO_HP, "monster");
 	}
 	
 	public void attack(Character c) {

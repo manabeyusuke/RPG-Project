@@ -6,7 +6,7 @@ public class Werewolf extends WalkingMonster {
 	
 //	コンストラクタ
 	public Werewolf(String name) {
-		super(name, Constants.monsterParameters.MATANGO_HP, "monster");
+		super(name, constants.monsterParameters.MATANGO_HP, "monster");
 	}
 	
 //	攻撃するメソッド

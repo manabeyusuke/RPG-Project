@@ -23,10 +23,10 @@ public class Main {
 		int result = q.startQuest(partyList, scan);
 		
 		// 3.クリア or ゲームオーバーを表示
-		if (result == Constants.Massage.RTN_CLEAR) {
-			System.out.println(Constants.Massage.CLEAR_MESSAGE);
+		if (result == constants.Massage.RTN_CLEAR) {
+			System.out.println(constants.Massage.CLEAR_MESSAGE);
 		} else {
-			System.out.println(Constants.Massage.GAMEOVER_MESSAGE);
+			System.out.println(constants.Massage.GAMEOVER_MESSAGE);
 		}
 		System.out.println("");
 		System.out.println("*――――――――――――――――――――――――――*");

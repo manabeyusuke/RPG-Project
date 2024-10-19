@@ -1,6 +1,6 @@
 package character;
 
-import Constants.characterParameters;
+import constants.characterParameters;
 import monster.Monster;
 
 public class Cleric extends Character{
