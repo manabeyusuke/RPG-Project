@@ -9,6 +9,7 @@ import Item.FullPotion;
 import Item.HighPotion;
 import Item.Item;
 import Item.Potion;
+import Item.TailofPhoenix;
 import character.Character;
 import common.Common;
 
@@ -20,37 +21,48 @@ public class Itemlogic {
 	 * @return Map アイテムリスト
 	 */
 	public static void itemDropAndUpdateItembox(Map<String,Item>itb) {
+		System.out.println("*************************アイテムドロップ***************************");
+		System.out.println("＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿️");
+		
 		// 3つ落とす
 		for (int i = 0; i < 3; i++) {
-			int num = Common.getRandum(4);
+			Common.sleepThread(1000); 
+			int num = Common.getRandum(5);
 			
 			switch(num) {
 				// ポーションをドロップ
 				case 0:
-					Item p = new Potion("ポーション", 1);
-					System.out.println("ポーションを手に入れた。");
+					Potion p = new Potion("ポーション");
+					System.out.println("【ポーション】を手に入れた。");
 					addItemBox(itb,p);
 					break;
 				// ハイポーションをドロップ
 				case 1:
-					Item highP = new HighPotion("ハイポーション", 1);
-					System.out.println("ハイポーションを手に入れた。");
+					HighPotion highP = new HighPotion("ハイポーション");
+					System.out.println("【ハイポーション】を手に入れた。");
 					addItemBox(itb,highP);
 					break;
 				// フルポーションをドロップ
 				case 2:
-					Item fullP = new FullPotion("フルポーション", 1);
-					System.out.println("フルポーションを手に入れた。");
+					FullPotion fullP = new FullPotion("フルポーション");
+					System.out.println("【フルポーション】を手に入れた。");
 					addItemBox(itb,fullP);
 					break;
-					// 解毒薬をドロップ
+				// 解毒薬をドロップ
 				case 3:
-					Item antidote = new Antidote("解毒薬");
-					System.out.println("解毒薬を手に入れた。");
+					Antidote antidote = new Antidote("解毒薬");
+					System.out.println("【解毒薬】を手に入れた。");
 					addItemBox(itb,antidote);
+					break;
+				// フェニックスの尾をドロップ
+				case 4:
+					TailofPhoenix phoenix = new TailofPhoenix("フェニックスの尾");
+					System.out.println("【フェニックスの尾】を手に入れた。");
+					addItemBox(itb,phoenix);
 					break;
 			}
 		}
+		Common.sleepThread(2000); 
 	}
 	
 	/** 
@@ -77,7 +89,7 @@ public class Itemlogic {
 	 * @param ibMap アイテムボックスMap
 	 * @param partyListMap パーティーメンバーMap
 	 */
-	public static void itemEffect(Scanner scan, Map<String,Item> ibMap, Map<String,Character> partyListMap) {
+	public static void useItem(Scanner scan, Map<String,Item> ibMap, Map<String,Character> partyListMap) {
 		Map<Integer,Character>partyListMapOfIndex = new HashMap<>();
 		Map<Integer,Item>ibMapOfIndex = new HashMap<>();
 		int itemIndex = 1;
@@ -88,11 +100,9 @@ public class Itemlogic {
 		for (Map.Entry<String,Character> entry : partyListMap.entrySet()) {
 			partyListMapOfIndex.put(entry.getValue().getIndex(), entry.getValue());
 		}
-		// アイテムを持っていたらindexをキーにしてMapに詰め替える（アイテムMap）
-		if (ibMap != null) {
-			for (Map.Entry<String,Item> entry : ibMap.entrySet()) {
-				ibMapOfIndex.put(entry.getValue().getIndex(), entry.getValue());
-			}
+		// indexをキーにしてMapに詰め替える（アイテムMap）
+		for (Map.Entry<String,Item> entry : ibMap.entrySet()) {
+			ibMapOfIndex.put(entry.getValue().getIndex(), entry.getValue());
 		}
 		
 		// 1つ以上持っているアイテム、もしくは存在する番号を選ぶまでループ
@@ -120,11 +130,25 @@ public class Itemlogic {
 		
 		System.out.println("【誰に使用しますか？】");
 		for (Integer key : partyListMapOfIndex.keySet()) {
-			System.out.print(partyListMapOfIndex.get(key).getIndex() + "." 
-					+ partyListMapOfIndex.get(key).getFreename() + " | " + "HP:" + partyListMapOfIndex.get(key).getHp());
-			for (int i = 0; i < partyListMapOfIndex.get(key).getStatuslistsize(); i++) {
-				System.out.print("【" + partyListMapOfIndex.get(key).getStatuslistOfindex(i) + "】");
-			} System.out.println();
+			// フェニックスの尾を選択した場合はHPが0のキャラクターのみを選択肢にする
+			if (ibMapOfIndex.get(itemIndex).getName().equals("フェニックスの尾")) {
+				if (partyListMapOfIndex.get(key).getHp() == 0) {
+					System.out.print(partyListMapOfIndex.get(key).getIndex() + "." 
+							+ partyListMapOfIndex.get(key).getFreename() + " | " + "HP:" + partyListMapOfIndex.get(key).getHp());
+					for (int i = 0; i < partyListMapOfIndex.get(key).getStatuslistsize(); i++) {
+						System.out.print("【" + partyListMapOfIndex.get(key).getStatuslistOfindex(i) + "】");
+					} System.out.println();
+				}
+			} else {
+				// フェニックスの尾以外のアイテムを選択した場合は、HPが0より大きいキャラクターのみを選択肢にする
+				if (partyListMapOfIndex.get(key).getHp() > 0) {
+					System.out.print(partyListMapOfIndex.get(key).getIndex() + "." 
+							+ partyListMapOfIndex.get(key).getFreename() + " | " + "HP:" + partyListMapOfIndex.get(key).getHp());
+					for (int i = 0; i < partyListMapOfIndex.get(key).getStatuslistsize(); i++) {
+						System.out.print("【" + partyListMapOfIndex.get(key).getStatuslistOfindex(i) + "】");
+					} System.out.println();
+				}
+			}
 		}
 		int charIndex = scan.nextInt();
 		

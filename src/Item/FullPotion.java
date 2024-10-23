@@ -2,11 +2,12 @@ package Item;
 
 import character.Character;
 
+//アイテム：フルポーションクラス
 public class FullPotion extends Item {
 	
 	// コンストラクタ
-	public FullPotion(String name, int count) {
-		super(name, count);
+	public FullPotion(String name) {
+		super(name, 1);
 	}
 	
 	/** アイテム効果メソッド

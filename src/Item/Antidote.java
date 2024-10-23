@@ -2,7 +2,7 @@ package Item;
 
 import character.Character;
 
-// 解毒薬クラス
+// アイテム：解毒薬クラス
 public class Antidote extends Item {
 	
 	// コンストラクタ
@@ -16,6 +16,7 @@ public class Antidote extends Item {
 	*/
 	public void effect(Character c) {
 		System.out.println(c.getFreename() + "に解毒薬を使った。");
+		
 		// statusリストから毒を削除
 		c.removeStatuslist("毒");
 		this.setCount(getCount() - 1);

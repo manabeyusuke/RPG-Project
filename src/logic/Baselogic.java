@@ -13,6 +13,7 @@ import character.Knight;
 import character.Thief;
 import common.Common;
 import monster.DeathBat;
+import monster.ElectricRat;
 import monster.Goblin;
 import monster.Monster;
 import monster.PoisonMatango;
@@ -64,6 +65,9 @@ public class Baselogic {
 		System.out.println("￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣️");
 		System.out.println("                       パーティーを作成しました                      ");
 		System.out.println("＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿️");
+		
+		Common.sleepThread(3000); 
+		
 		for(Character pl : partyList) {
 			System.out.println(pl.getFreename() + " | HP:" + pl.getHp());
 		}
@@ -89,7 +93,7 @@ public class Baselogic {
 		
 		// モンスターをランダムに3体生成する
 		for(int i = 1; i < 4; i++) {
-			int num = Common.getRandum(4);
+			int num = Common.getRandum(5);
 			
 			switch(num) {
 				case 0:
@@ -108,6 +112,10 @@ public class Baselogic {
 					DeathBat d = new DeathBat("デスバット");
 					monsterList.add(d);
 					break;
+				case 4:
+					ElectricRat e = new ElectricRat("でんきネズミ");
+					monsterList.add(e);
+					break;
 			}
 		}
 		return monsterList;
@@ -120,9 +128,10 @@ public class Baselogic {
 	 * @param monsterListMap
 	 */
 	public static void showCurrentHp(Map<String, Character> partyListMap, Map<String, Monster> monsterListMap) {
-		System.out.println("------------------キャラクターの現在のHP------------------");
+		System.out.println("-----------------------キャラクターの現在のHP------------------------");
+		Common.sleepThread(2000); 
 		for (Map.Entry<String, Character> entry : partyListMap.entrySet()) {
-			if (entry.getKey() != null) {
+			if (entry.getKey() != null && entry.getValue().getHp() > 0) {
 				System.out.print(entry.getValue().getFreename() + " | HP:" + entry.getValue().getHp());
 				for (int i = 0; i < entry.getValue().getStatuslistsize(); i++) {
 					System.out.print("【" + entry.getValue().getStatuslistOfindex(i) + "】");
@@ -130,14 +139,22 @@ public class Baselogic {
 				System.out.println();
 			}
 		}
-		System.out.println("=======================================================");
-		System.out.println("------------------モンスターの現在のHP--------------------");
+		System.out.println("==================================================================");
+		
+		// コンソールが一気に流れないように3秒止める
+		Common.sleepThread(3000); 
+		System.out.println("------------------------モンスターの現在のHP-------------------------");
+		Common.sleepThread(2000); 
 		for (Map.Entry<String, Monster> entry : monsterListMap.entrySet()) {
 			if (entry.getKey() != null) {
 				System.out.println(entry.getValue().getName() + " | HP:" + entry.getValue().getHp());
 			}
 		}
+		System.out.println("------------------------------------------------------------------");
 		System.out.println("");
+		
+		// コンソールが一気に流れないように3秒止める
+		Common.sleepThread(3000); 
 	}
 	
 	/** Map内に存在するキーをランダムに返すメソッド

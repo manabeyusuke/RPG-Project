@@ -15,7 +15,7 @@ public class PoisonMatango extends WalkingMonster{
 			System.out.println("毒の胞子をばらまいた！");
 			int poisonDamage = monsterParameters.ATTACK_POISON;
 			c.setHp(c.getHp() - poisonDamage);
-			System.out.println(c.getFreename() + poisonDamage + "ポイントのダメージ");
+			System.out.println(c.getFreename() + "に" + poisonDamage + "ポイントのダメージ");
 			if (!c.getStatuslist("毒")) {
 				c.setStatuslist("毒");
 				System.out.println(c.getFreename() + "は【状態異常：毒】になった。");

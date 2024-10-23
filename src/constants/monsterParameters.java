@@ -14,5 +14,8 @@ public class monsterParameters {
 	
 //	デスバットのパラメーター
 	public static final int DEATHBAT_HP = 1;
+	
+// 電気ねずみのパタメーター
+	public static final int ELECTRIC_RAT_HP = 1;
 
 }

@@ -10,5 +10,15 @@ public class Common {
 		
 		return rn;
 	}
+	
+	// 処理を一時的に止めるメソッド
+	// モンスターの行動が連続で続くとコンソールが一気に流れて見づらいためその対策
+	public static void sleepThread(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e){
+	        e.printStackTrace();
+	    }
+	}
 
 }

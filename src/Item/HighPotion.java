@@ -2,11 +2,12 @@ package Item;
 
 import character.Character;
 
+// アイテム：ハイポーションクラス
 public class HighPotion extends Item {
 	
 	// コンストラクタ
-	public HighPotion(String name, int count) {
-		super(name, count);
+	public HighPotion(String name) {
+		super(name, 1);
 	}
 	
 	/** 
